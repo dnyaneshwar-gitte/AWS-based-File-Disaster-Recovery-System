@@ -115,7 +115,9 @@ Replication flow:
 Primary Bucket (Mumbai)
         ↓
 Backup Bucket (US East)
+
 🧪 Testing the System
+
 Upload file
 
 aws s3 cp test.txt s3://dr-primary-bucket/
@@ -135,12 +137,14 @@ Recover from backup bucket
 aws s3 cp s3://dr-backup-bucket/test.txt .
 
 🔐 Security Features
+
 IAM role-based access control
 No public bucket access
 Versioning enabled for recovery
 Controlled replication permissions
 
 📊 Key Features
+
 ✅ Cross-region backup (Mumbai → US East)
 ✅ Automatic replication
 ✅ Data durability and redundancy
