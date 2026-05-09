@@ -54,10 +54,15 @@ IAM Role creation
 
 🚧 Step-by-Step Implementation
 1️⃣ Create Primary S3 Bucket (Mumbai)
+
 aws s3 mb s3://dr-primary-bucket --region ap-south-1
+
 2️⃣ Create Backup S3 Bucket (US East)
+
 aws s3 mb s3://dr-backup-bucket --region us-east-1
+
 3️⃣ Enable Versioning (Important)
+
 aws s3api put-bucket-versioning \
   --bucket dr-primary-bucket \
   --versioning-configuration Status=Enabled
@@ -65,6 +70,7 @@ aws s3api put-bucket-versioning \
 aws s3api put-bucket-versioning \
   --bucket dr-backup-bucket \
   --versioning-configuration Status=Enabled
+  
 4️⃣ Configure Lifecycle Policy (Cost Optimization)
 
 Create a file lifecycle.json:
@@ -96,6 +102,7 @@ aws s3api put-bucket-lifecycle-configuration \
   --lifecycle-configuration file://lifecycle.json
   
 5️⃣ Configure Cross-Region Replication (CRR)
+
 Step 1: Create IAM Role for replication
 Allow S3 to replicate objects from primary to backup bucket
 Step 2: Attach policy to allow:
@@ -110,14 +117,21 @@ Primary Bucket (Mumbai)
 Backup Bucket (US East)
 🧪 Testing the System
 Upload file
+
 aws s3 cp test.txt s3://dr-primary-bucket/
+
 Verify in Primary Bucket
+
 aws s3 ls s3://dr-primary-bucket/
+
 Verify Replication in Backup Bucket
+
 aws s3 ls s3://dr-backup-bucket/
+
 Simulate Disaster Recovery
 Delete file from primary bucket
 Recover from backup bucket
+
 aws s3 cp s3://dr-backup-bucket/test.txt .
 
 🔐 Security Features
